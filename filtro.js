@@ -8,27 +8,29 @@ const productos = [
   {nombre: "Zapato rojo", tipo: "zapato", color: "rojo", img: "./zapato-rojo.jpg"}
 ]
 
-const li = document.getElementsByName("lista-de-productos")
+const li = document.getElementById("lista-de-productos")//Se corrigió el get element 
 const $i = document.querySelector('.input');
+//Se crea función para llamar productos
+function displayProductos(productos) {
+  productos.forEach(producto => { //Creo que es mejor con un forEach para que aparezca sin hacer un for/while
+    const d = document.createElement("div");
+    d.classList.add("producto");
 
-for (let i = 0; i < productos.length; i++) {
-  var d = document.createElement("div")
-  d.classList.add("producto")
+    const ti = document.createElement("p");
+    ti.classList.add("titulo");
+    ti.textContent = producto.nombre;
 
-  var ti = document.createElement("p")
-  ti.classList.add("titulo")
-  ti.textContent = productos[i].nombre
-  
-  var imagen = document.createElement("img");
-  imagen.setAttribute('src', productos[i].img);
+    const imagen = document.createElement("img");
+    imagen.setAttribute('src', producto.img);
 
-  d.appendChild(ti)
-  d.appendChild(imagen)
+    d.appendChild(ti);
+    d.appendChild(imagen);
 
-  li.appendChild(d)
+    li.appendChild(d);
+  });
 }
 
-displayProductos(productos)
+displayProductos(productos) //Se creó la función para que pudiera  llamarse
 const botonDeFiltro = document.querySelector("button");
 
 botonDeFiltro.onclick = function() {
@@ -39,23 +41,24 @@ botonDeFiltro.onclick = function() {
   const texto = $i.value;
   console.log(texto);
   const productosFiltrados = filtrado(productos, texto );
-
-  for (let i = 0; i < productosFiltrados.length; i++) {
-    var d = document.createElement("div")
-    d.classList.add("producto")
+//Creo que esta parte se puede omitir porque ya estaba la otra que escribí que era el forEach
+  // for (let i = 0; i < productosFiltrados.length; i++) {
+  //   var d = document.createElement("div")
+  //   d.classList.add("producto")
   
-    var ti = document.createElement("p")
-    ti.classList.add("titulo")
-    ti.textContent = productosFiltrados[i].nombre
+  //   var ti = document.createElement("p")
+  //   ti.classList.add("titulo")
+  //   ti.textContent = productosFiltrados[i].nombre
     
-    var imagen = document.createElement("img");
-    imagen.setAttribute('src', productosFiltrados[i].img);
+  //   var imagen = document.createElement("img");
+  //   imagen.setAttribute('src', productosFiltrados[i].img);
   
-    d.appendChild(ti)
-    d.appendChild(imagen)
+  //   d.appendChild(ti)
+  //   d.appendChild(imagen)
   
-    li.appendChild(d)
-  }
+  //   li.appendChild(d)
+  // }
+  displayProductos(productosFiltrados); 
 }
 
 const filtrado = (productos = [], texto) => {
